@@ -18,13 +18,10 @@ android {
 
     signingConfigs {
         release {
-            def keystoreFile = file("../quakesafe.jks")
-            if (keystoreFile.exists()) {
-                storeFile keystoreFile
-                storePassword System.getenv("RELEASE_STORE_PASSWORD") ?: (project.hasProperty('RELEASE_STORE_PASSWORD') ? RELEASE_STORE_PASSWORD : "")
-                keyAlias System.getenv("RELEASE_KEY_ALIAS") ?: (project.hasProperty('RELEASE_KEY_ALIAS') ? RELEASE_KEY_ALIAS : "")
-                keyPassword System.getenv("RELEASE_KEY_PASSWORD") ?: (project.hasProperty('RELEASE_KEY_PASSWORD') ? RELEASE_KEY_PASSWORD : "")
-            }
+            storeFile file("../quakesafe.jks")
+            storePassword "quakesafe123"
+            keyAlias "quakesafe"
+            keyPassword "quakesafe123"
         }
     }
 
@@ -32,9 +29,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            if (signingConfigs.release.storeFile != null) {
-                signingConfig signingConfigs.release
-            }
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
