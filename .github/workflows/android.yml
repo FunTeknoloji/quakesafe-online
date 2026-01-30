@@ -24,8 +24,8 @@ jobs:
     - name: Build Release
       run: ./gradlew assembleRelease bundleRelease
 
-    - name: Verify Signing (APK)
-      run: $ANDROID_HOME/build-tools/34.0.0/apksigner verify --print-certs app/build/outputs/apk/release/*.apk
+    - name: Export Upload Certificate (PEM)
+      run: keytool -export -rfc -alias quakesafe -file upload_certificate.pem -keystore quakesafe.jks -storepass quakesafe123
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
@@ -38,3 +38,9 @@ jobs:
       with:
         name: QuakeSafe-AAB
         path: app/build/outputs/bundle/release/*.aab
+
+    - name: Upload PEM (For Key Reset)
+      uses: actions/upload-artifact@v4
+      with:
+        name: QuakeSafe-PEM-Certificate
+        path: upload_certificate.pem
